@@ -47,7 +47,7 @@ To use this framework in a new project:
 
 1. **Initialize the Submodule:**
 ```bash
-git submodule add [https://github.com/](https://.git .agent-framework
+git submodule add https://github.com/endofu/xaquima.git .xaquima
 ```
 
 2. **Scaffold the Project Context:**
@@ -61,12 +61,12 @@ touch .agent/config.md
 3. **Bind the CLI Harness:**
 Run the initialization script to symlink the correct routing configuration for your chosen CLI.
 ```bash
-bash .agent-framework/scripts/init-harness.sh
+bash .xaquima/scripts/init-harness.sh
 ```
 
 ## 5. Execution Modes
 
-- **Automated Mode:** Run `bash .agent-framework/scripts/start-pm.sh` in a background terminal. The PM will poll Linear every 5 minutes and autonomously route work.
+- **Automated Mode:** Run `bash .xaquima/scripts/start-pm.sh` in a background terminal. The PM will poll Linear every 5 minutes and autonomously route work.
 - **Interactive Mode:** Open your configured CLI harness (Claude Code, OpenCode, or Gemini CLI) and use native slash commands (e.g., `/plan ENG-123`, `/code ENG-123`) to manually trigger specific agents while paired with them.
 
 ## Agent Directives (Self-Awareness)
