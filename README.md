@@ -33,9 +33,9 @@ Agents poll the host project's Linear board and react based on a State + Tag mat
 | Linear State | Tags Present | Framework Action | Human Action |
 | :--- | :--- | :--- | :--- |
 | **Plan** | `agent` | PM applies `wip`, spawns **Planner** | None |
-| **Plan** | `agent`, `review` | None (Waiting) | Review PRD. Move to `Todo`. |
-| **Todo** | `agent` | PM applies `wip`, spawns **QA** then **Coder** | None |
-| **Todo** | `agent`, `review` | None (Waiting) | Review Code. Move to `Integrate`. |
+| **Plan** | `agent`, `review` | None (Waiting) | Review PRD. Move to `Implement`. |
+| **Implement** | `agent` | PM applies `wip`, spawns **QA** then **Coder** | None |
+| **Implement** | `agent`, `review` | None (Waiting) | Review Code. Move to `Integrate`. |
 | **Integrate** | `agent` | PM applies `wip`, spawns **Integrator** | None |
 | **Integrate** | `agent`, `review` | None (Waiting) | Final review of docs. Move to `Done`. |
 
