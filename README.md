@@ -109,6 +109,8 @@ bash .xaquima/scripts/init-harness.sh claude gemini  # bind multiple
 
 This script:
 - Symlinks agent `.md` files to the correct harness directory
+- Symlinks custom commands to the correct harness command directory
+- Symlinks shared skills (for Claude Code: `.claude/skills/`)
 - Scaffolds `.agent/prd/`, `.agent/specs/`, and `.agent/config.md`
 - For Gemini CLI: enables experimental agents in `settings.json`
 
@@ -145,7 +147,70 @@ Open your configured CLI harness and work with agents directly:
 
 ---
 
-## 7. Project Structure
+## 6. Custom Commands
+
+Xaquima ships with 6 commands available as slash commands in your CLI harness:
+
+| Command | Description | Usage |
+|:---|:---|:---|
+| `/xq-status` | Show all active agent-managed tasks | `/xq-status` |
+| `/xq-review` | Review agent work on a task | `/xq-review ENG-123` |
+| `/xq-rework` | Send task back for rework with feedback | `/xq-rework ENG-123 "fix the error handling"` |
+| `/xq-spec` | Search `.agent/specs/` docs | `/xq-spec authentication` |
+| `/xq-health` | Framework health dashboard | `/xq-health` |
+| `/xq-context` | Dump full agent context for a task | `/xq-context ENG-123` |
+
+Commands are stored per-harness in `commands/` using native formats:
+- **Claude Code**: `commands/claude/<name>/SKILL.md` → symlinked to `.claude/skills/`
+- **Gemini CLI**: `commands/gemini/<name>.toml` → symlinked to `.gemini/commands/`
+- **OpenCode**: `commands/opencode/<name>.md` → symlinked to `.opencode/commands/`
+
+---
+
+## 7. Skills (Reusable Knowledge)
+
+Skills are domain-knowledge modules that agents can reference. They provide structured knowledge for common operations without duplicating instructions across prompts.
+
+| Skill | Purpose |
+|:---|:---|
+| `linear-workflow` | Tag management, commenting patterns, query conventions |
+| `git-worktree` | Worktree commands, committing, comparing branches |
+| `prd-validation` | PRD required sections, validation checklist, common problems |
+| `tdd-workflow` | Test writing patterns, file organization, anti-loop safeguards |
+| `spec-management` | Spec file structure, template, cross-referencing, writing style |
+
+Skills live in `skills/<name>/SKILL.md`. For Claude Code, they're symlinked to `.claude/skills/` for native invocation. For other harnesses, agents reference them via `.xaquima/skills/` paths.
+
+---
+
+## 8. Execution Modes
+
+### Automated Mode
+Run the PM daemon in a background terminal. It polls Linear and autonomously routes work.
+
+```bash
+# Interactive harness selection
+bash .xaquima/scripts/start-pm.sh
+
+# Direct harness selection
+bash .xaquima/scripts/start-pm.sh claude
+
+# Custom poll interval (in seconds, default: 300)
+POLL_INTERVAL=120 bash .xaquima/scripts/start-pm.sh gemini
+```
+
+The daemon writes logs to `.xaquima/xaquima.log` and its PID to `.xaquima/xaquima.pid`.
+
+### Interactive Mode
+Open your configured CLI harness and work with agents directly:
+
+- **Claude Code**: Agents auto-delegate or invoke explicitly. Commands via `/xq-*`.
+- **Gemini CLI**: Reference agents by name. Commands via `/xq-*`.
+- **OpenCode**: Use `@agent-name` for agents. Commands via `/xq-*`.
+
+---
+
+## 9. Project Structure
 
 ```
 your-project/
@@ -156,23 +221,42 @@ your-project/
 │   │   ├── qa.md
 │   │   ├── coder.md
 │   │   └── integrator.md
-│   ├── agents/             ← Harness-specific wrappers
-│   │   ├── claude/         ← .claude/agents/ symlink targets
-│   │   ├── gemini/         ← .gemini/agents/ symlink targets
-│   │   └── opencode/       ← .opencode/agents/ symlink targets
+│   ├── agents/             ← Harness-specific agent wrappers
+│   │   ├── claude/
+│   │   ├── gemini/
+│   │   └── opencode/
+│   ├── commands/           ← Harness-specific custom commands
+│   │   ├── claude/         ← SKILL.md format
+│   │   ├── gemini/         ← .toml format
+│   │   └── opencode/       ← .md format
+│   ├── skills/             ← Shared knowledge modules
+│   │   ├── linear-workflow/
+│   │   ├── git-worktree/
+│   │   ├── prd-validation/
+│   │   ├── tdd-workflow/
+│   │   └── spec-management/
 │   ├── scripts/
-│   │   ├── init-harness.sh ← Setup script
-│   │   ├── start-pm.sh     ← PM daemon
-│   │   └── worktree.sh     ← Git worktree manager
+│   │   ├── init-harness.sh
+│   │   ├── start-pm.sh
+│   │   └── worktree.sh
 │   └── templates/
 │       ├── config-template.md
 │       └── prd-template.md
 ├── .agent/                 ← Project-specific context
-│   ├── config.md           ← Project manifest
-│   ├── prd/                ← Active PRDs
-│   └── specs/              ← Living architecture docs
+│   ├── config.md
+│   ├── prd/
+│   └── specs/
 ├── .worktrees/xq/          ← Git worktrees (auto-created)
-└── .claude/agents/ → .xaquima/agents/claude/  ← Symlinks
+├── .claude/                ← Claude Code (symlinked)
+│   ├── agents/
+│   └── skills/
+├── .gemini/                ← Gemini CLI (symlinked)
+│   ├── agents/
+│   └── commands/
+└── .opencode/              ← OpenCode (symlinked)
+    ├── agents/
+    └── commands/
+```
 ```
 
 ---

@@ -1,0 +1,10 @@
+prompt = """Review the agent's work on Linear task {{args}}.
+
+1. Read `.agent/config.md` for project context.
+2. Fetch the Linear task {{args}} — get title, description, status, tags, comments.
+3. Based on the task status:
+   - Plan: Read and review `.agent/prd/{{args}}.md` against the template.
+   - Implement: Show `git diff develop...xq/{{args}}`, run tests.
+   - Integrate: Show updated `.agent/specs/` files, verify PRD was deleted.
+4. Present findings and ask: Accept (move to next status, remove review tag) or Rework (remove review tag, add feedback)?"""
+description = "Review agent work on a specific task (pass LINEAR-ID as argument)"

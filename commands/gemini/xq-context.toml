@@ -1,0 +1,9 @@
+prompt = """Dump all context for Linear task {{args}}.
+
+1. Read `.agent/config.md` — show the config.
+2. Fetch the Linear task — show title, description, status, tags, comments.
+3. Check if PRD exists at `.agent/prd/{{args}}.md`. Show it.
+4. Check if worktree exists at `.worktrees/xq/{{args}}`. Show status.
+5. List relevant `.agent/specs/` files.
+6. State which agent would process this task next."""
+description = "Show full agent context for a task (pass LINEAR-ID as argument)"

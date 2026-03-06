@@ -1,0 +1,7 @@
+prompt = """Search the project's architecture documentation in `.agent/specs/` for: {{args}}
+
+1. Search all files in `.agent/specs/` for content matching the search term.
+2. Show matching files with summaries and relevant sections.
+3. Show cross-references to other spec files.
+4. If no matches, list all available spec files with their first heading."""
+description = "Search .agent/specs/ architecture docs (pass search term as argument)"

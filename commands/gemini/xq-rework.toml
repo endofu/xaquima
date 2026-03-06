@@ -1,0 +1,12 @@
+prompt = """Send Linear task back for agent rework.
+
+Arguments: first word is LINEAR-ID, rest is feedback.
+
+1. Read `.agent/config.md` for Linear context.
+2. Find the Linear issue (first argument).
+3. Remove the `review` tag.
+4. Add a comment: 'Rework requested by human reviewer: [feedback]'.
+5. Confirm the action. PM will re-process on next cycle.
+
+Task and feedback: {{args}}"""
+description = "Send a task back for rework with feedback (pass LINEAR-ID and feedback)"

@@ -1,0 +1,9 @@
+prompt = """Show the current status of all Xaquima-managed tasks.
+
+1. Read `.agent/config.md` to get the Linear team key.
+2. Query Linear for all issues with the `agent` label.
+3. Group them by status (Plan, Implement, Integrate, Done).
+4. For each task show: Linear ID, title, current tags (wip/review), which agent is working on it.
+5. Show active worktrees and PM daemon status.
+6. Display as a clean markdown table."""
+description = "Show all active Xaquima tasks with their current status"

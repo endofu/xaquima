@@ -1,0 +1,13 @@
+prompt = """Run a health check on the Xaquima framework.
+
+Check and report on:
+1. PM Daemon: Is it running? Check `.xaquima/xaquima.pid` and process status.
+2. Harness Binding: Which agent symlinks exist in `.claude/agents/`, `.gemini/agents/`, `.opencode/agents/`?
+3. Configuration: Is `.agent/config.md` present and populated?
+4. Active Work: Run `.xaquima/scripts/worktree.sh list`. Any WIP tasks stuck?
+5. Documentation: How many spec files in `.agent/specs/`?
+6. Logs: Show last 10 lines of `.xaquima/xaquima.log`.
+7. Flag any problems found.
+
+Format as a clean status dashboard."""
+description = "Check Xaquima framework health — daemon, config, worktrees, logs"
