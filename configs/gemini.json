@@ -1,9 +1,0 @@
-{
-  "aliases": {
-    "pm": "--system-prompt .xaquima/prompts/pm.md --context .agent/config.md",
-    "plan": "--system-prompt .xaquima/prompts/planner.md --context .agent/config.md",
-    "qa": "--system-prompt .xaquima/prompts/qa.md --context .agent/config.md",
-    "code": "--system-prompt .xaquima/prompts/coder.md --context .agent/config.md",
-    "integrate": "--system-prompt .xaquima/prompts/integrator.md --context .agent/config.md"
-  }
-}

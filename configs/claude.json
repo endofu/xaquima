@@ -1,9 +1,0 @@
-{
-  "customCommands": {
-    "pm": { "prompt": "Read .xaquima/prompts/pm.md and .agent/config.md. Process task: ${1}" },
-    "plan": { "prompt": "Read .xaquima/prompts/planner.md and .agent/config.md. Process task: ${1}" },
-    "qa": { "prompt": "Read .xaquima/prompts/qa.md and .agent/config.md. Process task: ${1}" },
-    "code": { "prompt": "Read .xaquima/prompts/coder.md and .agent/config.md. Process task: ${1}" },
-    "integrate": { "prompt": "Read .xaquima/prompts/integrator.md and .agent/config.md. Process task: ${1}" }
-  }
-}
