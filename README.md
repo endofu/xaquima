@@ -31,6 +31,8 @@ Contains the stateful data for the specific repository:
 
 The framework employs five specialized agents, each with strict boundaries and tool permissions.
 
+The framework employs five specialized agents, each with strict boundaries and tool permissions.
+
 | Agent | Role | Can Write | Cannot Touch |
 |:---|:---|:---|:---|
 | **PM** | Orchestrator — monitors Linear, manages tags, delegates to subagents | Linear tags/comments | Code, tests, docs |
@@ -45,26 +47,28 @@ Each agent's full instructions are in `prompts/`. Harness-specific wrappers with
 
 ## 3. The State Machine (Linear Integration)
 
-Agents poll the host project's Linear board and react based on a **State + Tag** matrix. Agents only interact with tasks possessing the `agent` tag.
+Agents poll the host project's Linear board and react based on a **State + Tag** matrix. Agents only interact with unblocked tasks possessing the `xqm-todo` tag.
 
 | Linear State | Tags Present | Framework Action | Human Action |
 |:---|:---|:---|:---|
-| **Plan** | `agent` | PM adds `wip`, delegates to **Planner** | None |
-| **Plan** | `agent`, `review` | None (waiting) | Review PRD. Move to `Implement`. |
-| **Implement** | `agent` | PM adds `wip`, creates worktree, delegates **QA** → then **Coder** | None |
-| **Implement** | `agent`, `review` | None (waiting) | Review code. Move to `Integrate`. |
-| **Integrate** | `agent` | PM adds `wip`, delegates to **Integrator** | None |
-| **Integrate** | `agent`, `review` | None (waiting) | Final review. Move to `Done`. |
+| **Plan** | `xqm-todo` | PM adds `xqm-wip`, delegates to **Planner** | None |
+| **Plan** | `xqm-review` | None (waiting) | Review PRD. Move to `Implement`. |
+| **Implement** | `xqm-todo` | PM adds `xqm-wip`, creates worktree, delegates **QA** → then **Coder** | None |
+| **Implement** | `xqm-review` | None (waiting) | Review code. Move to `Integrate`. |
+| **Integrate** | `xqm-todo` | PM adds `xqm-wip`, delegates to **Integrator** | None |
+| **Integrate** | `xqm-review` | None (waiting) | Final review. Move to `Done`. |
 
-### Tag Lifecycle
-- **`agent`** — Marks a task for agent processing. Applied by human.
-- **`wip`** — Applied by PM immediately before delegating. Prevents re-processing. Removed by PM when subagent returns.
-- **`review`** — Applied by PM after successful subagent run. Signals human review needed.
+### Tag Lifecycle (Xaquima Label Group)
+These tags must belong to a single label group in Linear (e.g., `Xaquima`). Because they are in a label group, they act as radio buttons — an issue can only have ONE of these labels at a time.
+- **`xqm-todo`** — Marks a task for agent processing. Applied by human.
+- **`xqm-wip`** — Applied by PM before delegating (auto-removes `xqm-todo`). Prevents re-processing. 
+- **`xqm-review`** — Applied by PM after successful subagent run (auto-removes `xqm-wip`). Signals human review needed.
 
-> If a task fails human review, remove the `review` tag and leave comments. The PM will automatically pick it back up.
+> If a task fails human review, label it back to `xqm-todo` and leave comments. The PM will automatically pick it back up.
+> **Note on Blocked Issues**: If a task is tagged `xqm-todo` but has open blocking issues, the PM will ignore it until all blockers are resolved.
 
 ### Crash Recovery
-On each polling cycle, the PM scans for tasks stuck with `wip` (no activity for 30+ minutes) and clears the tag for re-processing.
+On each polling cycle, the PM scans for tasks stuck with `xqm-wip` (no activity for 30+ minutes) and assigns `xqm-todo` for re-processing.
 
 ---
 
@@ -268,10 +272,10 @@ Your Linear team needs the following custom statuses:
 - **Implement** — For tasks ready for TDD + coding
 - **Integrate** — For tasks needing documentation integration
 
-And the following labels:
-- **`agent`** — Marks a task for automated processing
-- **`wip`** — (auto-managed) Agent is currently working
-- **`review`** — (auto-managed) Ready for human review
+And the following label group (e.g., `Xaquima`):
+- **`xqm-todo`** — Marks a task for automated processing
+- **`xqm-wip`** — (auto-managed) Agent is currently working
+- **`xqm-review`** — (auto-managed) Ready for human review
 
 ---
 

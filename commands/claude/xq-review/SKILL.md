@@ -1,6 +1,6 @@
 ---
 name: xq-review
-description: Review the work done by an agent on a specific task. Shows the PRD, code diff, and test results. Use when a task has the 'review' tag.
+description: Review the work done by an agent on a specific task. Shows the PRD, code diff, and test results. Use when a task has the 'xqm-review' tag.
 disable-model-invocation: true
 argument-hint: "<LINEAR-ID>"
 ---
@@ -32,4 +32,4 @@ Review the agent's work on Linear task **$ARGUMENTS**.
 - Verify the PRD file was deleted
 - Present a summary
 
-4. Present your findings and ask the human: **Accept** (move to next status, remove `review` tag) or **Rework** (remove `review` tag, add feedback comment)?
+4. Present your findings and ask the human: **Accept** (move to next status, set label to `xqm-todo` so next agent picks it up) or **Rework** (set label to `xqm-todo`, add feedback comment)?

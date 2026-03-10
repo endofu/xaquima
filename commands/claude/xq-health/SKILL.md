@@ -21,7 +21,7 @@ Present a health report covering:
 1. **PM Daemon**: Running/stopped, PID, uptime, last activity
 2. **Harness Binding**: Which harnesses are set up
 3. **Configuration**: Is `.agent/config.md` present and populated?
-4. **Active Work**: Any worktrees? Any WIP tasks stuck?
+4. **Active Work**: Any worktrees? Any `xqm-wip` tasks stuck?
 5. **Documentation**: How many spec files exist?
 6. **Issues**: Flag any problems found (stale PIDs, missing files, etc.)
 

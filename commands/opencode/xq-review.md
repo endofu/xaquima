@@ -9,4 +9,4 @@ Review the agent's work on Linear task **$ARGUMENTS**.
    - Plan: Read `.agent/prd/$ARGUMENTS.md`, check against `.xaquima/templates/prd-template.md`.
    - Implement: Show `git diff develop...xq/$ARGUMENTS`, run tests from config.
    - Integrate: Show updated `.agent/specs/` files, verify PRD deleted.
-4. Present findings. Ask: **Accept** or **Rework**?
+4. Present findings. Ask: **Accept** (move to next status, set label to xqm-todo) or **Rework** (set label to xqm-todo, add feedback)?

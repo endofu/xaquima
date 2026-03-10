@@ -4,9 +4,9 @@ Arguments: first word is LINEAR-ID, rest is feedback.
 
 1. Read `.agent/config.md` for Linear context.
 2. Find the Linear issue (first argument).
-3. Remove the `review` tag.
+3. Change the label from `xqm-review` to `xqm-todo`. (Linear auto-removes the old label if they are in the same label group).
 4. Add a comment: 'Rework requested by human reviewer: [feedback]'.
-5. Confirm the action. PM will re-process on next cycle.
+5. Confirm the action. PM will re-process on next cycle since it has `xqm-todo`.
 
 Task and feedback: {{args}}"""
 description = "Send a task back for rework with feedback (pass LINEAR-ID and feedback)"

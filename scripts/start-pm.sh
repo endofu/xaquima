@@ -82,15 +82,15 @@ build_command() {
     case "$harness" in
         claude)
             # Claude Code: invoke the PM agent
-            echo "claude --agent pm --print --output-format text -p 'Execute the PM orchestration cycle. Check Linear for tasks with the agent tag and process them according to your state machine rules.'"
+            echo "claude --agent pm --print --output-format text -p 'Execute the PM orchestration cycle. Check Linear for tasks with the xqm-todo tag and process them according to your state machine rules. Remember to skip blocked issues.'"
             ;;
         gemini)
             # Gemini CLI: invoke using the PM agent
-            echo "gemini -a pm 'Execute the PM orchestration cycle. Check Linear for tasks with the agent tag and process them according to your state machine rules.'"
+            echo "gemini -a pm 'Execute the PM orchestration cycle. Check Linear for tasks with the xqm-todo tag and process them according to your state machine rules. Remember to skip blocked issues.'"
             ;;
         opencode)
             # OpenCode: invoke the PM agent
-            echo "opencode agent pm 'Execute the PM orchestration cycle. Check Linear for tasks with the agent tag and process them according to your state machine rules.'"
+            echo "opencode agent pm 'Execute the PM orchestration cycle. Check Linear for tasks with the xqm-todo tag and process them according to your state machine rules. Remember to skip blocked issues.'"
             ;;
         *)
             echo ""

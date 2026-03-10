@@ -4,21 +4,24 @@ Reusable knowledge for interacting with Linear in the Xaquima framework.
 
 ## Tag Management
 
-### Available Tags
-- `agent` — Applied by humans. Marks a task for automated processing.
-- `wip` — Applied by PM. Indicates an agent is actively working.
-- `review` — Applied by PM. Indicates work is complete and ready for human review.
+### Available Tags (Xaquima Label Group)
+
+The workflow relies on three distinct labels mapped to the `Xaquima` label group in Linear. Because they are in a label group, they act as radio buttons — an issue can only have ONE of these labels at a time. Applying one automatically removes the others.
+
+- `xqm-todo` — Applied by humans. Marks a task for automated processing.
+- `xqm-wip` — Applied by PM. Indicates an agent is actively working.
+- `xqm-review` — Applied by PM. Indicates work is complete and ready for human review.
 
 ### Tag Operations
-When updating tags via the Linear MCP tool:
+When updating tags via the Linear MCP tool, you only need to push the new tag since the group ensures mutual exclusivity:
 ```
-# Add a tag
-save_issue(id: "<ISSUE-ID>", labels: ["agent", "wip"])
+# Add wip tag (auto-removes xqm-todo or xqm-review)
+save_issue(id: "<ISSUE-ID>", labels: ["xqm-wip"])
+```
 
-# Remove a tag — you must set ALL labels you want to keep
-# (Linear's label update replaces the full list)
-save_issue(id: "<ISSUE-ID>", labels: ["agent"])
-```
+### Blocking Dependencies
+When processing issues labeled `xqm-todo`, you **must** check for dependencies. 
+If an issue has incomplete blocking issues (issues in `blocks`), it must be skipped. Ensure you review the `blockedBy` or relation properties to ensure it's not waiting on another incomplete ticket.
 
 ### Status Transitions
 Agents **never** change a task's status. Only humans do that. The statuses are:
@@ -49,7 +52,8 @@ When adding a completion comment to a Linear task:
 ## Querying Tasks
 To find tasks ready for processing:
 ```
-list_issues(team: "<TEAM-KEY>", label: "agent", state: "Plan")
+list_issues(team: "<TEAM-KEY>", label: "xqm-todo", state: "Plan")
 ```
 
-To filter out already-processing tasks, check that the result does NOT have `wip` or `review` labels.
+To filter out already-processing tasks, check that the result does NOT have `xqm-wip` or `xqm-review` labels (which is naturally guaranteed if they are strictly in the `xqm-todo` state due to the label group radio button logic).
+Make sure to always skip unblocked items!

@@ -1,5 +1,5 @@
 ---
-description: "Xaquima PM Orchestrator. Monitors Linear for tasks tagged 'agent' and delegates to specialized subagents (planner, qa, coder, integrator) based on task status. Manages wip/review tag lifecycle."
+description: "Xaquima PM Orchestrator. Monitors Linear for tasks tagged 'xqm-todo' and delegates to specialized subagents (planner, qa, coder, integrator) based on task status. Manages xqm-wip/xqm-review tag lifecycle. Use this agent for automated task routing and orchestration."
 mode: subagent
 tools:
   write: false

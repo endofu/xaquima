@@ -14,11 +14,11 @@ Show the current status of all Xaquima-managed tasks.
 
 ## Instructions
 1. Read `.agent/config.md` to get the Linear team key.
-2. Query Linear for all issues with the `agent` label.
+2. Query Linear for all issues with the `xqm-todo`, `xqm-wip`, or `xqm-review` labels in the Xaquima label group.
 3. Group them by status (`Plan`, `Implement`, `Integrate`, `Done`).
 4. For each task, show:
    - Linear ID and title
-   - Current tags (`wip`, `review`, or neither)
-   - If `wip`: which agent is likely working (based on status)
+   - Current tag (`xqm-todo`, `xqm-wip`, or `xqm-review`)
+   - If `xqm-wip`: which agent is likely working (based on status)
    - If a worktree exists for it
 5. Display as a clean markdown table.

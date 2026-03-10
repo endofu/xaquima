@@ -9,7 +9,7 @@ Context:
 - PM daemon: !`cat .xaquima/xaquima.pid 2>/dev/null && echo "Running" || echo "Not running"`
 
 1. Read `.agent/config.md` to get the Linear team key.
-2. Query Linear for all issues with the `agent` label.
+2. Query Linear for all issues with labels `xqm-todo`, `xqm-wip`, or `xqm-review`.
 3. Group by status (Plan, Implement, Integrate, Done).
-4. Show: Linear ID, title, tags (wip/review), active agent, worktree status.
+4. Show: Linear ID, title, current tag (`xqm-todo`/`xqm-wip`/`xqm-review`), active agent, worktree status.
 5. Display as a clean markdown table.
