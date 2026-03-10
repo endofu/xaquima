@@ -77,7 +77,7 @@ bind_harness() {
     local linked=0
     for agent in "${AGENTS[@]}"; do
         if symlink_file "$source_dir/$agent.md" "$target_dir/$agent.md" "$agent.md"; then
-            ((linked++))
+            ((linked++)) || true
         fi
     done
 
@@ -124,7 +124,7 @@ bind_commands() {
                 local cmd_target="$target_dir/$cmd/SKILL.md"
                 if [ -f "$cmd_source" ]; then
                     if symlink_file "$cmd_source" "$cmd_target" "$cmd"; then
-                        ((linked++))
+                        ((linked++)) || true
                     fi
                 fi
             done
@@ -136,7 +136,7 @@ bind_commands() {
                 local cmd_target="$target_dir/$cmd.toml"
                 if [ -f "$cmd_source" ]; then
                     if symlink_file "$cmd_source" "$cmd_target" "$cmd.toml"; then
-                        ((linked++))
+                        ((linked++)) || true
                     fi
                 fi
             done
@@ -148,7 +148,7 @@ bind_commands() {
                 local cmd_target="$target_dir/$cmd.md"
                 if [ -f "$cmd_source" ]; then
                     if symlink_file "$cmd_source" "$cmd_target" "$cmd.md"; then
-                        ((linked++))
+                        ((linked++)) || true
                     fi
                 fi
             done
@@ -181,7 +181,7 @@ bind_skills() {
                 local skill_target=".claude/skills/$skill_name/SKILL.md"
                 if [ -f "$skill_source" ]; then
                     if symlink_file "$skill_source" "$skill_target" "$skill_name"; then
-                        ((linked++))
+                        ((linked++)) || true
                     fi
                 fi
             fi
